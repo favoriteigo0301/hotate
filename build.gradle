@@ -12,6 +12,8 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application.
     id 'application'
+
+    id 'org.flywaydb.flyway' version '7.4.0'
 }
 
 repositories {
@@ -29,6 +31,11 @@ dependencies {
 
     // Use JUnit Jupiter Engine for testing.
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+
+    compile group: 'org.flywaydb', name: 'flyway-core', version: '7.4.0'
+
+    // https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
+    compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.1'
 }
 
 application {
@@ -39,4 +46,11 @@ application {
 test {
     // Use junit platform for unit tests
     useJUnitPlatform()
+}
+
+
+flyway {
+    url = 'jdbc:mariadb://localhost:3306/sample'
+    user = 'sample'
+    password = 'sample'
 }
