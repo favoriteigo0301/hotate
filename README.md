@@ -1,8 +1,11 @@
-# javaTester
-javaで作った作品のテスト環境を作れるようにしたい（願望）   
-viエディタを少しは使えるようになりたい（切実）
+# hotate 
 
-## gradleプロジェクトを新規作成
+# 開発環境
+・ubuntu（ローカル環境）
+・Spring boot使用予定
+・mariaDB
+
+# gradleプロジェクトを新規作成
 
 gradle run  
 javaアプリケーションを実行する
