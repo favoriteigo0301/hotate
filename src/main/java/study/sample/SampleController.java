@@ -38,4 +38,10 @@ public class SampleController {
         System.out.println("jdbcでのcount文"+ memoDao.count() );
         return mav;
     }
+
+    @GetMapping("sample/memo")
+    public String sampleMemo() {
+        return "sample_memo";
+    }
+
 }
