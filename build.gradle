@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'idea'
 
     id 'org.flywaydb.flyway' version '7.4.0'
     id 'org.springframework.boot' version '2.4.1'
@@ -40,6 +41,10 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
+    compile group: 'org.springframework', name: 'springloaded', version: '1.2.8.RELEASE'
+
+    compile group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.4.1'
+
     compile group: 'org.webjars', name: 'bootstrap', version: '4.5.3'
 
     compile group: 'org.webjars.bower', name: 'jquery', version: '3.5.1'
@@ -57,4 +62,8 @@ flyway {
     url = 'jdbc:mariadb://localhost:3306/sample'
     user = 'sample'
     password = 'sample'
+}
+
+bootRun {
+    sourceResources sourceSets.main
 }
