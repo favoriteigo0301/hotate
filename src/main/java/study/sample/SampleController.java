@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import study.sample.dao.SampleDao;
 import study.sample.form.SampleMemoRequest;
@@ -17,6 +18,7 @@ import study.sample.repository.SampleMemo;
  *  SpringBootの動作を確認するためのサンプルクラス
  */
 @Controller
+@RequestMapping("/sample")
 public class SampleController {
 
     @Autowired
@@ -25,33 +27,33 @@ public class SampleController {
     @Autowired
     SampleDao memoDao;
 
-    @GetMapping("/sample/index")
+    @GetMapping("/index")
     public ModelAndView test(ModelAndView mav) {
         mav.setViewName("index");
         return mav;
     }
 
-    @GetMapping("/sample/count")
+    @GetMapping("/count")
     public ModelAndView count(ModelAndView mav){
         mav.setViewName("index");
         System.out.println("メモテーブル件数"+memoRepository.count());
         return mav;
     }
 
-    @GetMapping("sample/jdbc/count")
+    @GetMapping("/jdbc/count")
     public ModelAndView jdbcCount(ModelAndView mav) {
         mav.setViewName("index");
         System.out.println("jdbcでのcount文"+ memoDao.count() );
         return mav;
     }
 
-    @GetMapping("sample/memo")
+    @GetMapping("/memo")
     public String sampleMemo(@ModelAttribute("request") SampleMemoRequest request, ModelAndView mav) {
         mav.addObject("request", request);
         return "sample_memo";
     }
 
-    @PostMapping("sample/memo/index")
+    @PostMapping("/memo/index")
     public ModelAndView memoIndex(@Validated @ModelAttribute("request") SampleMemoRequest request, BindingResult result, ModelAndView mav) {
         mav.addObject("request",request);
         if (result.hasErrors()) {
