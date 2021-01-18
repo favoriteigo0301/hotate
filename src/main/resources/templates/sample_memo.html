@@ -31,7 +31,7 @@
             </div>
         </div>
     </nav>
-    <form th:action="@{/sample/memo/index}" th:method="post" th:object="${request}">
+    <form th:action="@{/sample/memo/index}" th:method="post" th:object="${request}" enctype="multipart/form-data">
         <div class="form-row">
             <div class="col-md-6 mt-3">
                 <label for="subject">タイトル</label>
