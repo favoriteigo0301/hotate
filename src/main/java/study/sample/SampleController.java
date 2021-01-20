@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import study.sample.dao.SampleDao;
 import study.sample.form.SampleMemoRequest;
 import study.sample.repository.SampleMemo;
+import study.sample.service.SampleMemoService;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -35,6 +36,9 @@ public class SampleController {
 
     @Autowired
     SampleDao memoDao;
+
+    @Autowired
+    SampleMemoService service;
 
     @GetMapping("/index")
     public ModelAndView test(ModelAndView mav) {
@@ -75,32 +79,8 @@ public class SampleController {
             }
         }
 
-        Path path = Paths.get("/var/tmp");
-        if (!Files.exists(path)) {
-            try {
-                Files.createDirectory(path);
-            } catch (IOException e) {
-                System.err.println(e);
-            }
-        }
-        System.out.println(request.getTitle());
-        System.out.println(request.getImage());
-
-
-        int dot = request.getImage().getOriginalFilename().lastIndexOf(".");
-        String extention = "";
-        if (dot > 0) {
-            extention = request.getImage().getOriginalFilename().substring(dot).toLowerCase();
-        }
-        String fileName = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS").format(LocalDateTime.now());
-        System.out.println(fileName);
-        Path uploadFile = Paths.get("/var/tmp/" + fileName + extention);
-
-        try(OutputStream os = Files.newOutputStream(uploadFile,StandardOpenOption.CREATE)) {
-            byte[] bytes = request.getImage().getBytes();
-        } catch (IOException e) {
-            System.err.println(e);
-        }
+        service.createDirectory();
+        service.uploadImage(request.getImage());
 
         mav.setViewName("sample_memo");
         return mav;
