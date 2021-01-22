@@ -3,7 +3,6 @@ package study.sample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,15 +13,6 @@ import study.sample.dao.SampleDao;
 import study.sample.form.SampleMemoRequest;
 import study.sample.repository.SampleMemo;
 import study.sample.service.SampleMemoService;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  *  SpringBootの動作を確認するためのサンプルクラス
@@ -69,19 +59,10 @@ public class SampleController {
     @PostMapping("/memo/index")
     public ModelAndView memoIndex(@Validated @ModelAttribute("request") SampleMemoRequest request, BindingResult result, ModelAndView mav)  {
         mav.addObject("request",request);
-        if (result.hasErrors()) {
-            for (FieldError error : result.getFieldErrors()) {
-                if (error.getField().equals("title")) {
-                    mav.addObject("titleError", error.getDefaultMessage());
-                } else if (error.getField().equals("detail")) {
-                    mav.addObject("detailError", error.getDefaultMessage());
-                }
-            }
+        if (!result.hasErrors()) {
+            service.createDirectory();
+            service.uploadImage(request.getImage());
         }
-
-        service.createDirectory();
-        service.uploadImage(request.getImage());
-
         mav.setViewName("sample_memo");
         return mav;
     }

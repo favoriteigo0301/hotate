@@ -36,23 +36,21 @@
             <div class="col-md-6 mt-3">
                 <label for="subject">タイトル</label>
                 <input type="text" class="form-control is-invalid" name="title" placeholder="今日は朝起きれた">
-                <div class="invalid-feedback" th:text="${titleError}"></div>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
             </div>
         </div>
         <div class="form-row">
             <div class="col-md-6 mt-3">
                 <label for="detail">内容</label>
                 <textarea class="form-control is-invalid" name="detail" placeholder="えらい"></textarea>
-                <div class="invalid-feedback" th:text="${detailError}"></div>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}"></div>
             </div>
         </div>
 
         <div class="col-md-6 mt-3">
             <label for="image">画像</label>
-            <input type="file" class="form-control is-invalid" name="image">
-            <div class="invalid-feedback">
-                画像を選択してください
-            </div>
+            <input type="file" class="form-control is-valid" name="image">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></div>
         </div>
 
         <input type="submit" name="submit" class="btn btn-primary mt-3" value="登録">

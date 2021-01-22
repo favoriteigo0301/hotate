@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "sample_memo")
 @Data
-public class Memo {
+public class MemoEntity {
     @Id
     @GeneratedValue
     private long id;
