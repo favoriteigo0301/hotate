@@ -14,6 +14,7 @@ create table sample_memo
     subject   varchar(40)        not null,
     memo      text               not null,
     image     blob,
+    image_name varchar(40),
     create_at timestamp,
     update_at timestamp,
     foreign key (user_id) references users (id)
