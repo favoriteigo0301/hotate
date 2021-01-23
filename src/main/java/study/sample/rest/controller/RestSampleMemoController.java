@@ -1,9 +1,11 @@
 package study.sample.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import study.sample.service.SampleMemoService;
+import study.sample.entity.SampleMemoEntity;
+import study.sample.rest.service.RestSampleMemoService;
 
 /**
  * サンプルメモRestコントローラクラス
@@ -15,13 +17,12 @@ import study.sample.service.SampleMemoService;
 public class RestSampleMemoController {
 
     @Autowired
-    private SampleMemoService sampleMemoService;
+    private RestSampleMemoService restSampleMemoService;
 
-    @GetMapping(path = "/list")
-    public void getSampleMemo(@RequestParam int id) {
-        System.out.println("API呼べたよ！");
-        System.out.println("パラメータ受け取り" + id);
-
+    @GetMapping(path = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+    public SampleMemoEntity getSampleMemo(@RequestParam long id) {
+        SampleMemoEntity entity = restSampleMemoService.getSampleMemoById(id);
+        return  entity;
     }
 
 

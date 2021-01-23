@@ -1,6 +1,6 @@
 create table users
 (
-    id         int primary key not null auto_increment,
+    id         bigint primary key not null auto_increment,
     name       varchar(40)        not null,
     password   varchar(20)        not null,
     created_at timestamp,
@@ -9,8 +9,8 @@ create table users
 
 create table sample_memo
 (
-    id        int primary key not null auto_increment,
-    user_id   int not null,
+    id        bigint primary key not null auto_increment,
+    user_id   bigint not null,
     subject   varchar(40)        not null,
     memo      text               not null,
     image     mediumblob,

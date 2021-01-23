@@ -14,7 +14,7 @@ public class UserEntity {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private int id;
+    private long id;
 
     @NotNull
     @Column(name = "name")

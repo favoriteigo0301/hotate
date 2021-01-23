@@ -13,7 +13,7 @@ public class SampleMemoEntity {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private int id;
+    private long id;
 
     @Column(name = "user_id")
     private int userId;
