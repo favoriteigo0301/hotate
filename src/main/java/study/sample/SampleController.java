@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import study.sample.dao.SampleDao;
+import study.sample.entity.SampleMemoEntity;
 import study.sample.form.SampleMemoRequest;
-import study.sample.repository.SampleMemo;
+import study.sample.repository.SampleMemoRepository;
 import study.sample.service.SampleMemoService;
+
+import java.time.LocalDateTime;
 
 /**
  *  SpringBootの動作を確認するためのサンプルクラス
@@ -22,7 +25,7 @@ import study.sample.service.SampleMemoService;
 public class SampleController {
 
     @Autowired
-    SampleMemo memoRepository;
+    SampleMemoRepository memoRepository;
 
     @Autowired
     SampleDao memoDao;
@@ -61,7 +64,7 @@ public class SampleController {
         mav.addObject("request",request);
         if (!result.hasErrors()) {
             service.createDirectory();
-            service.uploadImage(request.getImage());
+            service.regist(request);
         }
         mav.setViewName("sample_memo");
         return mav;

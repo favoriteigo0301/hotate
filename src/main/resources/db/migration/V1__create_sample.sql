@@ -13,10 +13,10 @@ create table sample_memo
     user_id   int not null,
     subject   varchar(40)        not null,
     memo      text               not null,
-    image     blob,
+    image     mediumblob,
     image_name varchar(40),
-    create_at timestamp,
-    update_at timestamp,
+    created_at timestamp,
+    updated_at timestamp,
     foreign key (user_id) references users (id)
 );
 

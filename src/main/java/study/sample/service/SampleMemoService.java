@@ -1,7 +1,12 @@
 package study.sample.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import study.sample.entity.SampleMemoEntity;
+import study.sample.form.SampleMemoRequest;
+import study.sample.repository.SampleMemoRepository;
+import study.sample.repository.UserRepository;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -19,8 +24,13 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class SampleMemoService {
 
-    public SampleMemoService() {
+    @Autowired
+    private UserRepository userRepository;
 
+    @Autowired
+    private SampleMemoRepository sampleMemoRepository;
+
+    public SampleMemoService() {
     }
 
     public boolean createDirectory() {
@@ -45,17 +55,33 @@ public class SampleMemoService {
         return extention;
     }
 
-    public void uploadImage(MultipartFile image) {
+    private byte[] uploadImage(MultipartFile image) {
         String extention = getExtentionFromUploadFile(image);
         String fileName = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS").format(LocalDateTime.now());
-        System.out.println(fileName);
         Path uploadFile = Paths.get("/var/tmp/" + fileName + extention);
+        byte[] byteImage = null;
 
         try(OutputStream os = Files.newOutputStream(uploadFile, StandardOpenOption.CREATE)) {
-            byte[] bytes = image.getBytes();
+            byteImage = image.getBytes();
         } catch (IOException e) {
             System.err.println(e);
         }
+
+        return byteImage;
+
+    }
+
+    public void regist(SampleMemoRequest request) {
+        byte[] byteImage = uploadImage(request.getImage());
+        SampleMemoEntity sampleMemoEntity = new SampleMemoEntity();
+        sampleMemoEntity.setUserId(1);
+        sampleMemoEntity.setSubject(request.getTitle());
+        sampleMemoEntity.setMemo(request.getDetail());
+        sampleMemoEntity.setImage(byteImage);
+        sampleMemoEntity.setCreatedAt(LocalDateTime.now());
+        sampleMemoEntity.setUpdatedAt(LocalDateTime.now());
+
+        sampleMemoRepository.save(sampleMemoEntity);
 
     }
 

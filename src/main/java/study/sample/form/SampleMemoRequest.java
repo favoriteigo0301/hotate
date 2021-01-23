@@ -1,13 +1,12 @@
 package study.sample.form;
 
 
-import jdk.jfr.ContentType;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 
+@Data
 public class SampleMemoRequest {
 
     @NotBlank(message = "タイトルを入力してください")
@@ -21,27 +20,4 @@ public class SampleMemoRequest {
     public SampleMemoRequest() {
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    public MultipartFile getImage() {
-        return image;
-    }
-
-    public void setImage(MultipartFile image) {
-        this.image = image;
-    }
 }
