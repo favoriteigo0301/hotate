@@ -1,21 +1,26 @@
 package study.sample.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 import study.sample.entity.SampleMemoEntity;
-import study.sample.form.SampleMemoRequest;
 import study.sample.repository.SampleMemoRepository;
+import study.sample.form.SampleMemoRequest;
 import study.sample.repository.UserRepository;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * サンプルロジッククラス
@@ -82,7 +87,21 @@ public class SampleMemoService {
         sampleMemoEntity.setUpdatedAt(LocalDateTime.now());
 
         sampleMemoRepository.save(sampleMemoEntity);
-
     }
 
+    /**
+     * サンプルメモAPIからサンプルメモリストを取得する
+     * @return
+     */
+    public List<SampleMemoEntity> getSampleMemoList() {
+
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .fromUriString("http://localhost:8080/api/memo/list")
+                .queryParam("id",1);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<SampleMemoEntity[]> response = restTemplate.getForEntity(builder.toUriString(), SampleMemoEntity[].class);
+
+        return null;
+    }
 }

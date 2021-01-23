@@ -1,4 +1,4 @@
-package study.sample;
+package study.sample.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,12 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import study.sample.dao.SampleDao;
-import study.sample.entity.SampleMemoEntity;
-import study.sample.form.SampleMemoRequest;
 import study.sample.repository.SampleMemoRepository;
 import study.sample.service.SampleMemoService;
-
-import java.time.LocalDateTime;
+import study.sample.form.SampleMemoRequest;
 
 /**
  *  SpringBootの動作を確認するためのサンプルクラス
@@ -67,6 +64,13 @@ public class SampleController {
             service.regist(request);
         }
         mav.setViewName("sample_memo");
+        return mav;
+    }
+
+    @GetMapping("/api/memo")
+    public ModelAndView apiMemo(@Validated @ModelAttribute("request") SampleMemoRequest request, BindingResult result, ModelAndView mav) {
+        mav.setViewName("sample_memo");
+        service.getSampleMemoList();
         return mav;
     }
 }
