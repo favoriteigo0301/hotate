@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common_head(title, scripts,links)">
+    <meta charset="UTF-8">
+    <link th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <script th:href="@{/webjars/jquery/3.5.1/dist/jquery.min.map}"></script>
+    <script th:href="@{/webjars/popper.js/1.16.0/popper.js}"></script>
+    <title th:text="${title}"></title>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top" th:fragment="common_nav">
+    <div class="container">
+        <a class="navbar-brand" href="sample_memo.html">サンプルメモアプリ</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar-content">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">ホーム<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">一覧</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">登録</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>
