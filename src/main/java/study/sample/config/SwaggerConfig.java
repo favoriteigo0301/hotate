@@ -1,20 +1,24 @@
 package study.sample.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.service.VendorExtension;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.ArrayList;
-
+/**
+ * Swagger設定クラス
+ * API概要と詳細について記述
+ * URL:{ドメイン}/swagger-ui.html
+ */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
 
+    @Bean
     public Docket swaggerSpringPlugin() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("sample-api")
@@ -25,18 +29,10 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfo(
-                "サンプルメモAPI"
-                ,"サンプルメモのCRUD処理に使用する"
-                ,"V1"
-                ,"????"
-                ,new Contact(
-                        "イッシー"
-                ,"localhost"
-                ,"xxxxx@localhost.com")
-                ,"API LICECSES"
-                ,"htttp://xxxxx.co.jp"
-                , new ArrayList<VendorExtension>()
-        );
+        return new ApiInfoBuilder()
+                .title("サンプルメモアプリ")
+                .description("サンプルメモAPI仕様について")
+                .version("1.0.0")
+                .build();
     }
 }
