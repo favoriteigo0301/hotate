@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'idea'
+    id 'jacoco'
 
     id 'org.flywaydb.flyway' version '7.4.0'
     id 'org.springframework.boot' version '2.4.1'
@@ -56,6 +57,12 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-core', version: '2.9.2'
 
     mainClassName = 'study.App'
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled true
+    }
 }
 
 test {

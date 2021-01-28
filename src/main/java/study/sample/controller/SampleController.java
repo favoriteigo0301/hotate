@@ -21,14 +21,17 @@ public class SampleController {
     @Autowired
     SampleMemoRepository memoRepository;
 
+    /**
+     * SpringJdbcを動かすためのDAO(用途を理解するために記述）
+     */
     @Autowired
     SampleDao memoDao;
 
     @Autowired
     SampleMemoService service;
 
-    @GetMapping("/index")
-    public ModelAndView test(ModelAndView mav) {
+    @GetMapping("/test")
+    public ModelAndView index(ModelAndView mav) {
         mav.setViewName("index");
         return mav;
     }
@@ -67,7 +70,14 @@ public class SampleController {
     @GetMapping("/api/memo/{id}")
     public ModelAndView apiMemo(@ModelAttribute("request") SampleMemoRequest request, BindingResult result, ModelAndView mav, @PathVariable(name = "id") long id) {
         mav.setViewName("sample_memo");
-        service.getSampleMemoList();
+        service.getSampleMemo();
+        return mav;
+    }
+
+    @GetMapping("/memo/list")
+    public ModelAndView showMemoList(ModelAndView mav) {
+
+        mav.setViewName("sample_memo_list");
         return mav;
     }
 }
