@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::common_head('サンプルメモアプリ',~{::script},~{::link})"></head>
+<body>
+    <nav th:replace="common::common_nav"></nav>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card" style="max-width: 25em;">
+                <h4 class="card-header">ユーザA</h4>
+                <div class="card-body">
+                    <h4 class="card-title">題名</h4>
+                    <p class="card-text">内容</p>
+                </div>
+                <div class="card-footer">
+                    一言あれば
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="card" style="max-width: 25em;">
+                <h4 class="card-header">ユーザB</h4>
+                <div class="card-body">
+                    <h4 class="card-title">題名</h4>
+                    <p class="card-text">内容</p>
+                </div>
+                <div class="card-footer">
+                    一言あれば
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="card" style="max-width: 25em;">
+                <h4 class="card-header">ユーザC</h4>
+                <div class="card-body">
+                    <h4 class="card-title">題名</h4>
+                    <p class="card-text">内容</p>
+                </div>
+                <div class="card-footer">
+                    一言あれば
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

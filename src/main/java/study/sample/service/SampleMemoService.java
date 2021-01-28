@@ -93,15 +93,15 @@ public class SampleMemoService {
      * サンプルメモAPIからサンプルメモリストを取得する
      * @return
      */
-    public List<SampleMemoEntity> getSampleMemoList() {
+    public SampleMemoEntity getSampleMemo() {
 
         UriComponentsBuilder builder = UriComponentsBuilder
-                .fromUriString("http://localhost:8080/api/memo/list")
+                .fromUriString("http://localhost:8080/api/memo/")
                 .queryParam("id",1);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<SampleMemoEntity[]> response = restTemplate.getForEntity(builder.toUriString(), SampleMemoEntity[].class);
+        ResponseEntity<SampleMemoEntity> response = restTemplate.getForEntity(builder.toUriString(), SampleMemoEntity.class);
 
-        return null;
+        return response.getBody();
     }
 }

@@ -35,4 +35,8 @@ public class SampleMemoEntity {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(insertable = false, updatable = false, name = "user_id")
+    private UserEntity userEntity;
 }

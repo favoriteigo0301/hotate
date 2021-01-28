@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import study.sample.entity.SampleMemoEntity;
 import study.sample.repository.SampleMemoRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,8 +16,13 @@ public class RestSampleMemoService {
 
     public SampleMemoEntity getSampleMemoById(long id) {
         Optional<SampleMemoEntity> entity = sampleMemoRepository.findById(id);
-        System.out.println("戻り地" + entity.get());
 
         return entity.get();
     }
+
+    public List<SampleMemoEntity> getSampleMemoList() {
+        List<SampleMemoEntity> entityList = sampleMemoRepository.findAll();
+        return entityList;
+    }
+
 }
