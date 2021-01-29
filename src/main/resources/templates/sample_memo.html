@@ -4,31 +4,34 @@
 </head>
 <body>
     <nav th:replace="common::common_nav"></nav>
-    <form th:action="@{/sample/memo/index}" th:method="post" th:object="${request}" enctype="multipart/form-data">
-        <div class="form-row">
-            <div class="col-md-6 mt-3">
-                <label for="subject">タイトル</label>
-                <input type="text" class="form-control is-invalid" name="title" placeholder="今日は朝起きれた">
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+    <div id="sample">
+        <form th:action="@{/sample/memo/index}" th:method="post" th:object="${request}" enctype="multipart/form-data" @submit.prevent>
+            <div class="form-row">
+                <div class="col-md-6 mt-3">
+                    <label for="subject">タイトル</label>
+                    <input type="text" class="form-control is-invalid" name="title" placeholder="今日は朝起きれた" v-model="title">
+                    <div class="invalid-feedback">{{ titleErrorMessage }}</div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" ></div>
+                </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-6 mt-3">
-                <label for="detail">内容</label>
-                <textarea class="form-control is-invalid" name="detail" placeholder="えらい"></textarea>
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}"></div>
+            <div class="form-row">
+                <div class="col-md-6 mt-3">
+                    <label for="detail">内容</label>
+                    <textarea class="form-control is-invalid" name="detail" placeholder="えらい" v-model="detail"></textarea>
+                    <div class="invalid-feedback">{{ detailErrorMessage }}</div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}"></div>
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-6 mt-3">
-            <label for="image">画像</label>
-            <input type="file" class="form-control is-valid" name="image">
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></div>
-        </div>
+            <div class="col-md-6 mt-3">
+                <label for="image">画像</label>
+                <input type="file" class="form-control is-valid" name="image">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></div>
+            </div>
 
-        <input type="submit" name="submit" class="btn btn-primary mt-3" value="登録">
-    </form>
-    <div id="test">{{ message }}</div>
+            <input type="submit" name="submit" v-on:click="checkInput" class="btn btn-primary mt-3" value="登録">
+        </form>
+    </div>
 </body>
 <script th:src="@{/js/vue_sample.js}"></script>
 
