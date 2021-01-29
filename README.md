@@ -7,7 +7,7 @@ sample配下のパッケージはすべてサンプルコードとし、必ず�
 
 # 開発環境
 ・端末：ubuntu（ローカル環境）  
-・フロントエンド：「vue.js」「thymeleaf」  
+・フロントエンド：「vue.js」「thymeleaf」「BootStrap」
 ・バックエンド：「Spring Boot」  
 ・マイグレーション：「flyway」  
 ・データベース：「mariaDB」  
