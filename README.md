@@ -18,7 +18,7 @@ sample配下のパッケージはすべてサンプルコードとし、必ず�
 2.build.gradleの```flyway{}```のデータベース設定をローカル用にする  
 3.```gradle flywayMigrate```を叩き、マイグレーション実行する  
 4.```gradle bootJar```を実行  
-4.```gradle -jar /build/libs/study.jar```を叩き、localhost:8080/sample/memoにアクセスできればOK  
+5.```gradle -jar /build/libs/study.jar```を叩き、localhost:8080/sample/memoにアクセスできればOK  
 
 # テスト  
 ・```gradle test```を叩くとJunit
