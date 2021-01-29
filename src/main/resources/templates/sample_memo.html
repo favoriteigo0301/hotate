@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common::common_head('サンプルメモアプリ',~{::script},~{::link})"></head>
+<head th:replace="common::common_head('サンプルメモアプリ',~{::script},~{::link})">
+</head>
 <body>
     <nav th:replace="common::common_nav"></nav>
     <form th:action="@{/sample/memo/index}" th:method="post" th:object="${request}" enctype="multipart/form-data">
@@ -27,5 +28,8 @@
 
         <input type="submit" name="submit" class="btn btn-primary mt-3" value="登録">
     </form>
+    <div id="test">{{ message }}</div>
 </body>
+<script th:src="@{/js/vue_sample.js}"></script>
+
 </html>
