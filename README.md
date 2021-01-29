@@ -6,19 +6,19 @@ sample配下のパッケージはすべてサンプルコードとし、必ず�
 技術調査の結果をコードとして記載しているので、お作法をためしている形になります。
 
 # 開発環境
-*.0..端末：ubuntu（ローカル環境）
-・フロントエンド：「vue.js」「thymeleaf」
-・バックエンド：「Spring Boot」
-・マイグレーション：「flyway」
-・データベース：「mariaDB」
-・テスト：「Junit」「DBUnit(採用予定)」
+・端末：ubuntu（ローカル環境）  
+・フロントエンド：「vue.js」「thymeleaf」  
+・バックエンド：「Spring Boot」  
+・マイグレーション：「flyway」  
+・データベース：「mariaDB」  
+・テスト：「Junit」「DBUnit(採用予定)」  
 
 # 開発環境構築手順
-1.```git clone```で最新ソースを取得
-2.build.gradleの```flyway{}```のデータベース設定をローカル用にする
-3.```gradle flywayMigrate```を叩き、マイグレーション実行する
-4.```gradle bootJar```を実行
-4.```gradle -jar /build/libs/study.jar```を叩き、localhost:8080/sample/memoにアクセスできればOK
+1.```git clone```で最新ソースを取得  
+2.build.gradleの```flyway{}```のデータベース設定をローカル用にする  
+3.```gradle flywayMigrate```を叩き、マイグレーション実行する  
+4.```gradle bootJar```を実行  
+4.```gradle -jar /build/libs/study.jar```を叩き、localhost:8080/sample/memoにアクセスできればOK  
 
-# テスト
+# テスト  
 ・```gradle test```を叩くとJunit
