@@ -2,8 +2,10 @@ new Vue({
     el:"#sample",
     data: {
         title: '',
+        category:'',
         detail: '',
         titleErrorMessage: '',
+        categoryErrorMessage:'',
         detailErrorMessage:'',
         checkFlg: true
     },
@@ -17,8 +19,12 @@ new Vue({
                 this.detailErrorMessage= "詳細を入力してください"
                 this.checkFlg = false
             }
-            // form送信をキャンセルする
+            if (!this.category) {
+                this.categoryErrorMessage= "タグ名を入力してください"
+                this.checkFlg = false
+            }
             if (!this.checkFlg) {
+                // form送信をキャンセルする
                 event.preventDefault()
             }
         }

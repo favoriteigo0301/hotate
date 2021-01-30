@@ -16,6 +16,19 @@
             </div>
             <div class="form-row">
                 <div class="col-md-6 mt-3">
+                    <label for="tagName">タグ名</label>
+                    <input type="text" class="form-control is-invalid" name="category" placeholder="囲碁" v-model="category">
+                    <div class="invalid-feedback">{{ categoryErrorMessage }}</div>
+                    <!--<div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" ></div> -->
+                    <div>入力したタグ名を表示</div>
+                </div>
+                <div class="col-md-6 mt-5">
+                    <button type="button" class="btn btn-primary">追加</button>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6 mt-3">
                     <label for="detail">内容</label>
                     <textarea class="form-control is-invalid" name="detail" placeholder="えらい" v-model="detail"></textarea>
                     <div class="invalid-feedback">{{ detailErrorMessage }}</div>
