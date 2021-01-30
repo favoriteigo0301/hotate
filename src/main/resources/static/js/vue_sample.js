@@ -37,6 +37,8 @@ new Vue({
                 this.categoryErrorMessage = "タグ名を入力してください"
                 this.checkFlg = false
             }
+        }, deleteCategory:function (index) {
+            this.outputCategories.splice(index,1)
         }
 
     }
