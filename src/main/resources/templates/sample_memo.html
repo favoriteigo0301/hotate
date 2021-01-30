@@ -20,10 +20,10 @@
                     <input type="text" class="form-control is-invalid" name="category" placeholder="囲碁" v-model="category">
                     <div class="invalid-feedback">{{ categoryErrorMessage }}</div>
                     <!--<div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" ></div> -->
-                    <div>入力したタグ名を表示</div>
+                    <span v-for="outputCategory in outputCategories">{{ outputCategory }}&nbsp;</span>
                 </div>
                 <div class="col-md-6 mt-5">
-                    <button type="button" class="btn btn-primary">追加</button>
+                    <button type="button" class="btn btn-primary" v-on:click="addCategory">追加</button>
                 </div>
             </div>
 
@@ -43,6 +43,7 @@
             </div>
 
             <input type="submit" name="submit" v-on:click="checkInput" class="btn btn-primary mt-3" value="登録">
+            <input type="hidden" name="categories" value="{{outputCategories}}">
         </form>
     </div>
 </body>
