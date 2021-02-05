@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "sample_memo")
@@ -15,8 +16,13 @@ public class SampleMemoEntity {
     @Column(name = "id")
     private long id;
 
+    /**
     @Column(name = "user_id")
     private int userId;
+     */
+
+    @Column(name = "user_name")
+    private String userName;
 
     @Column(name = "subject")
     private String subject;
@@ -36,7 +42,9 @@ public class SampleMemoEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    /**
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(insertable = false, updatable = false, name = "user_id")
     private UserEntity userEntity;
+    */
 }

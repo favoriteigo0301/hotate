@@ -7,6 +7,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 import study.sample.entity.SampleMemoEntity;
+import study.sample.entity.SampleMemoListEntity;
 import study.sample.repository.SampleMemoRepository;
 import study.sample.form.SampleMemoRequest;
 import study.sample.repository.UserRepository;
@@ -79,7 +80,7 @@ public class SampleMemoService {
     public void regist(SampleMemoRequest request) {
         byte[] byteImage = uploadImage(request.getImage());
         SampleMemoEntity sampleMemoEntity = new SampleMemoEntity();
-        sampleMemoEntity.setUserId(1);
+        sampleMemoEntity.setUserName(request.getUserName());
         sampleMemoEntity.setSubject(request.getTitle());
         sampleMemoEntity.setMemo(request.getDetail());
         sampleMemoEntity.setImage(byteImage);
@@ -90,7 +91,7 @@ public class SampleMemoService {
     }
 
     /**
-     * サンプルメモAPIからサンプルメモリストを取得する
+     * サンプルメモAPIからサンプルメモを取得する
      * @return
      */
     public SampleMemoEntity getSampleMemo() {
@@ -103,5 +104,15 @@ public class SampleMemoService {
         ResponseEntity<SampleMemoEntity> response = restTemplate.getForEntity(builder.toUriString(), SampleMemoEntity.class);
 
         return response.getBody();
+    }
+
+    public SampleMemoEntity[] getList() {
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .fromUriString("http://localhost:8080/api/memo/list");
+
+        RestTemplate restTemplate = new RestTemplate();
+        SampleMemoEntity[] response =  restTemplate.getForObject(builder.toUriString(), SampleMemoEntity[].class);
+
+        return response;
     }
 }

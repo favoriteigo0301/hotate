@@ -1,9 +1,11 @@
 new Vue({
     el:"#sample",
     data: {
+        userName:'',
         title: '',
         category:'',
         detail: '',
+        userNameErrorMessage:'',
         titleErrorMessage: '',
         categoryErrorMessage:'',
         detailErrorMessage:'',
@@ -12,6 +14,9 @@ new Vue({
     },
     methods: {
         checkInput:function (event) {
+            if (!this.userName) {
+                this.userNameErrorMessage = 'ユーザ名を入力してください'
+            }
             if (!this.title) {
                 this.titleErrorMessage = "タイトルを入力してください"
                 this.checkFlg = false
@@ -29,7 +34,6 @@ new Vue({
                 event.preventDefault()
             }
         }, addCategory:function (event) {
-            //alert("追加ボタン押されたよ")
             if (this.category) {
                 this.outputCategories.push(this.category)
                 this.category = ''

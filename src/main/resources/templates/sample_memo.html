@@ -5,7 +5,18 @@
 <body>
     <nav th:replace="common::common_nav"></nav>
     <div id="sample">
-        <form th:action="@{/sample/memo/index}" th:method="post" th:object="${request}" enctype="multipart/form-data" @submit.prevent>
+        <form th:action="@{/sample/memo/index}" th:method="post" th:object="${request}" enctype="multipart/form-data" @submit="checkInput">
+            <div class="form-row">
+                <div class="col-md-6 mt-3">
+                    <label for="subject">ユーザ名</label>
+                    <input type="text" class="form-control is-invalid" name="userName" placeholder="イッシー" v-model="userName">
+                    <div class="invalid-feedback">{{ userNameErrorMessage }}</div>
+                    <!--
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" ></div>
+                    -->
+                </div>
+            </div>
+
             <div class="form-row">
                 <div class="col-md-6 mt-3">
                     <label for="subject">タイトル</label>
@@ -14,6 +25,7 @@
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" ></div>
                 </div>
             </div>
+
             <div class="form-row">
                 <div class="col-md-6 mt-3">
                     <label for="tagName">タグ名</label>
@@ -43,7 +55,7 @@
             </div>
 
             <input type="submit" name="submit" v-on:click="checkInput" class="btn btn-primary mt-3" value="登録">
-            <input type="hidden" name="categories" value="{{outputCategories}}">
+            <input type="hidden" name="categories" v-model="outputCategories">
         </form>
     </div>
 </body>

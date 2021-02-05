@@ -7,9 +7,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import study.sample.dao.SampleDao;
+import study.sample.entity.SampleMemoEntity;
 import study.sample.repository.SampleMemoRepository;
 import study.sample.service.SampleMemoService;
 import study.sample.form.SampleMemoRequest;
+
+import java.util.List;
 
 /**
  *  SpringBootの動作を確認するためのサンプルクラス
@@ -59,8 +62,10 @@ public class SampleController {
     @PostMapping("/memo/index")
     public ModelAndView memoIndex(@Validated @ModelAttribute("request") SampleMemoRequest request, BindingResult result, ModelAndView mav)  {
         mav.addObject("request",request);
+        System.out.println("カテゴリー名取得"+ request.getCategories().length);
+        System.out.println("ユーザ名" + request.getUserName());
         if (!result.hasErrors()) {
-            service.createDirectory();
+            //service.createDirectory();
             service.regist(request);
         }
         mav.setViewName("sample_memo");
@@ -76,6 +81,7 @@ public class SampleController {
 
     @GetMapping("/memo/list")
     public ModelAndView showMemoList(ModelAndView mav) {
+        SampleMemoEntity[] sampleMemos = service.getList();
 
         mav.setViewName("sample_memo_list");
         return mav;
