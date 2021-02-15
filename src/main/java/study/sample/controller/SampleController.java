@@ -1,11 +1,14 @@
 package study.sample.controller;
 
+import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import study.sample.config.SampleConfiguration;
 import study.sample.dao.SampleDao;
 import study.sample.entity.SampleMemoEntity;
 import study.sample.repository.SampleMemoRepository;
@@ -33,9 +36,13 @@ public class SampleController {
     @Autowired
     SampleMemoService service;
 
+    @Autowired
+    SampleConfiguration sampleConfiguration;
+
     @GetMapping("/test")
     public ModelAndView index(ModelAndView mav) {
         mav.setViewName("index");
+        System.out.println("コンフィグ" + sampleConfiguration.getUserNameSize());
         return mav;
     }
 
@@ -62,10 +69,7 @@ public class SampleController {
     @PostMapping("/memo/index")
     public ModelAndView memoIndex(@Validated @ModelAttribute("request") SampleMemoRequest request, BindingResult result, ModelAndView mav)  {
         mav.addObject("request",request);
-        System.out.println("カテゴリー名取得"+ request.getCategories().length);
-        System.out.println("ユーザ名" + request.getUserName());
         if (!result.hasErrors()) {
-            //service.createDirectory();
             service.regist(request);
         }
         mav.setViewName("sample_memo");

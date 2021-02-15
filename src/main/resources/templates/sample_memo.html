@@ -48,12 +48,6 @@
                 </div>
             </div>
 
-            <div class="col-md-6 mt-3">
-                <label for="image">画像</label>
-                <input type="file" class="form-control is-valid" name="image">
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></div>
-            </div>
-
             <input type="submit" name="submit" v-on:click="checkInput" class="btn btn-primary mt-3" value="登録">
             <input type="hidden" name="categories" v-model="outputCategories">
         </form>

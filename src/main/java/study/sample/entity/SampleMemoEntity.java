@@ -16,13 +16,9 @@ public class SampleMemoEntity {
     @Column(name = "id")
     private long id;
 
-    /**
+
     @Column(name = "user_id")
     private int userId;
-     */
-
-    @Column(name = "user_name")
-    private String userName;
 
     @Column(name = "subject")
     private String subject;
@@ -30,21 +26,9 @@ public class SampleMemoEntity {
     @Column(name = "memo")
     private String memo;
 
-    @Column(name = "image")
-    private byte[] image;
-
-    @Column(name = "image_name")
-    private String imageName;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    /**
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(insertable = false, updatable = false, name = "user_id")
-    private UserEntity userEntity;
-    */
 }

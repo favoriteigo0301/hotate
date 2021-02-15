@@ -18,8 +18,6 @@ public class SampleMemoRequest {
     @NotBlank(message = "内容を入力してください")
     private String detail;
 
-    private MultipartFile image;
-
     private String category;
 
     private String [] categories;

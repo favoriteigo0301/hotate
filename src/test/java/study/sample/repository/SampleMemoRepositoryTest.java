@@ -28,11 +28,6 @@ public class SampleMemoRepositoryTest {
     public static void setUp(@Autowired DataSource dataSource) {
         destination = new DataSourceDestination(dataSource);
         Operation operation = sequenceOf(
-                sql("delete from users where id = 99"),
-                insertInto("users")
-                    .columns("id", "name", "password", "created_at", "updated_at")
-                    .values(99,"イッシー", "test", "2021-02-01:23:07:30", "2021-02-01:23:07:30")
-                    .build(),
                 sql("delete from sample_memo"),
                 insertInto("sample_memo")
                         .columns("id", "user_name", "subject", "memo")
