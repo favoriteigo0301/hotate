@@ -30,9 +30,9 @@ public class SampleMemoRepositoryTest {
         Operation operation = sequenceOf(
                 sql("delete from sample_memo"),
                 insertInto("sample_memo")
-                        .columns("id", "user_name", "subject", "memo")
-                        .values(99,"イッシー","テスト","疲れた")
-                        .values(98,"イッシー2","テスト2","疲れた")
+                        .columns("id", "user_id", "subject", "memo")
+                        .values(99,1,"java","積み上げる")
+                        .values(98,2,"Junit","テストコードは奥が深い")
                         .build());
 
         DbSetup dbSetup = new DbSetup(destination, operation);
@@ -40,15 +40,15 @@ public class SampleMemoRepositoryTest {
     }
 
     /**
-     * サンプルメモテーブルの全削除確認
+     * 主キー削除確認
      */
     @Test
-    public void deleteTest(@Autowired DataSource dataSource) {
+    public void deletePrimaryKeyTest(@Autowired DataSource dataSource) {
         Changes changes = new Changes(dataSource);
 
         changes.setStartPointNow();
 
-        // サンプルメモテーブル
+        // 削除実行
         sampleMemoRepository.deleteById(99L);
 
         changes.setEndPointNow();
@@ -61,15 +61,15 @@ public class SampleMemoRepositoryTest {
     }
 
     /**
-     * サンプルメモテーブルの全削除確認
+     * 削除対象外データが削除されていないことを確認
      */
     @Test
-    public void tableDataTest(@Autowired DataSource dataSource) {
+    public void notDeleteData(@Autowired DataSource dataSource) {
         Table table = new Table(dataSource, "sample_memo");
         assertThat(table)
                 .column("id").value().isEqualTo("98")
-                .column("user_name").value().isEqualTo("イッシー2")
-                .column("subject").value().isEqualTo("テスト2")
-                .column("memo").value().isEqualTo("疲れた");
+                .column("user_id").value().isEqualTo("2")
+                .column("subject").value().isEqualTo("Junit")
+                .column("memo").value().isEqualTo("テストコードは奥が深い");
     }
 }
