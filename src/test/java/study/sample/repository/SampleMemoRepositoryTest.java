@@ -13,9 +13,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import study.sample.entity.SampleMemoEntity;
 
 import javax.sql.DataSource;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @SpringBootTest
@@ -73,5 +73,33 @@ class SampleMemoRepositoryTest {
                 .column("user_id").value().isEqualTo("2")
                 .column("subject").value().isEqualTo("Junit")
                 .column("memo").value().isEqualTo("テストコードは奥が深い");
+    }
+
+    /**
+     * 新規登録されていることを確認する
+     * @param dataSource
+     */
+    @Test
+    void registerSampleMemoTest(@Autowired DataSource dataSource) {
+        SampleMemoEntity testEntity = new SampleMemoEntity();
+        testEntity.setSubject("commewイベント");
+        testEntity.setMemo("輪読会は良いかも");
+        testEntity.setUserId(99);
+        testEntity.setCreatedAt(LocalDateTime.now());
+        testEntity.setUpdatedAt(LocalDateTime.now());
+
+        Changes change = new Changes(dataSource);
+        change.setStartPointNow();
+        sampleMemoRepository.save(testEntity);
+        sampleMemoRepository.flush();
+
+       change.setEndPointNow();
+       assertThat(change)
+               .changeOfCreationOnTable("sample_memo")
+               .isCreation()
+               .rowAtEndPoint()
+               .value("subject").isEqualTo("commewイベント")
+               .value("memo").isEqualTo("輪読会は良いかも")
+               .value("user_id").isEqualTo(99);
     }
 }
