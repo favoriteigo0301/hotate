@@ -15,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.sql.DataSource;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @SpringBootTest
-public class SampleMemoRepositoryTest {
+class SampleMemoRepositoryTest {
 
     @Autowired
     private SampleMemoRepository sampleMemoRepository;
@@ -25,14 +27,14 @@ public class SampleMemoRepositoryTest {
     private static Destination destination;
 
     @BeforeAll
-    public static void setUp(@Autowired DataSource dataSource) {
+    static void setUp(@Autowired DataSource dataSource) {
         destination = new DataSourceDestination(dataSource);
         Operation operation = sequenceOf(
                 sql("delete from sample_memo"),
                 insertInto("sample_memo")
-                        .columns("id", "user_id", "subject", "memo")
-                        .values(99,1,"java","積み上げる")
-                        .values(98,2,"Junit","テストコードは奥が深い")
+                        .columns("id", "user_id", "subject", "memo", "created_at", "updated_at")
+                        .values(99,1,"java","積み上げる", LocalDateTime.now(), LocalDateTime.now())
+                        .values(98,2,"Junit","テストコードは奥が深い", LocalDateTime.now(), LocalDateTime.now())
                         .build());
 
         DbSetup dbSetup = new DbSetup(destination, operation);
@@ -43,7 +45,7 @@ public class SampleMemoRepositoryTest {
      * 主キー削除確認
      */
     @Test
-    public void deletePrimaryKeyTest(@Autowired DataSource dataSource) {
+    void deletePrimaryKeyTest(@Autowired DataSource dataSource) {
         Changes changes = new Changes(dataSource);
 
         changes.setStartPointNow();
@@ -64,7 +66,7 @@ public class SampleMemoRepositoryTest {
      * 削除対象外データが削除されていないことを確認
      */
     @Test
-    public void notDeleteData(@Autowired DataSource dataSource) {
+    void notDeleteData(@Autowired DataSource dataSource) {
         Table table = new Table(dataSource, "sample_memo");
         assertThat(table)
                 .column("id").value().isEqualTo("98")

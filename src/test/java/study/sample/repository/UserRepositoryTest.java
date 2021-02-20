@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.sql.DataSource;
+import java.time.LocalDateTime;
 
 @SpringBootTest
 class UserRepositoryTest {
@@ -24,13 +25,16 @@ class UserRepositoryTest {
 
     @BeforeAll
     static void setUp(@Autowired DataSource dataSource) {
+        LocalDateTime createdAt = LocalDateTime.now();
+        LocalDateTime updatedAt = LocalDateTime.now();
+
         destination = new DataSourceDestination(dataSource);
         Operation operation = sequenceOf(
                 sql("delete from users"),
             insertInto("users")
-                .columns("id", "name")
-                .values(99,"イッシー")
-                .values(100,"不吉な人")
+                .columns("id", "name","created_at", "updated_at")
+                .values(99,"イッシー", createdAt, updatedAt)
+                .values(100,"不吉な人", createdAt, updatedAt)
                 .build());
         DbSetup dbSetup = new DbSetup(destination, operation);
         dbSetup.launch();
