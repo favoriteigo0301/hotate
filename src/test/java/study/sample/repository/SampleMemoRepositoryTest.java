@@ -3,6 +3,7 @@ package study.sample.repository;
 import static com.ninja_squad.dbsetup.Operations.*;
 import static org.assertj.db.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
@@ -15,10 +16,13 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.data.domain.Sort;
 import study.sample.entity.SampleMemoEntity;
 
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -64,6 +68,20 @@ class SampleMemoRepositoryTest {
                 .changeOfDeletion()
                 .hasPksValues(99);
     }
+
+    /**
+     * 主キー削除エラー確認
+     */
+    @Test
+    void deletePrimaryKeyErrorTest(@Autowired DataSource dataSource) {
+        Changes changes = new Changes(dataSource);
+
+        changes.setStartPointNow();
+
+        // 削除実行
+        assertThrows(InvalidDataAccessApiUsageException.class, () -> sampleMemoRepository.deleteById(null));
+    }
+
 
     /**
      * 削除対象外データが削除されていないことを確認
@@ -143,6 +161,9 @@ class SampleMemoRepositoryTest {
                     .value("memo").isEqualTo("楽しかった");
     }
 
+    /**
+     * 主キー検索できることを確認する
+     */
     @Order(1)
     @Test
     void selectByPrimaryKeyTest()  {
@@ -151,5 +172,16 @@ class SampleMemoRepositoryTest {
         assertEquals(actualEntity.get().getSubject(), "java");
         assertEquals(actualEntity.get().getUserId(), 1);
         assertEquals(actualEntity.get().getMemo(), "積み上げる");
+    }
+
+    /**
+     * 全件取得が降順であることを確認する
+     */
+    @Order(2)
+    @Test
+    void selectListTest() {
+        List<SampleMemoEntity> actualEntityList = sampleMemoRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        assertEquals(actualEntityList.size(), 2);
+        assertEquals(actualEntityList.get(0).getId(), 99L);
     }
 }
