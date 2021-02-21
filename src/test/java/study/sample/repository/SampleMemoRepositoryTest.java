@@ -81,6 +81,7 @@ class SampleMemoRepositoryTest {
      */
     @Test
     void registerSampleMemoTest(@Autowired DataSource dataSource) {
+        // テストデータ
         SampleMemoEntity testEntity = new SampleMemoEntity();
         testEntity.setSubject("commewイベント");
         testEntity.setMemo("輪読会は良いかも");
@@ -90,6 +91,8 @@ class SampleMemoRepositoryTest {
 
         Changes change = new Changes(dataSource);
         change.setStartPointNow();
+
+        // テスト対象メソッド実行
         sampleMemoRepository.save(testEntity);
         sampleMemoRepository.flush();
 
@@ -101,5 +104,39 @@ class SampleMemoRepositoryTest {
                .value("subject").isEqualTo("commewイベント")
                .value("memo").isEqualTo("輪読会は良いかも")
                .value("user_id").isEqualTo(99);
+    }
+
+    /**
+     * 更新されていることを確認
+     */
+    @Test
+    void updateSampleMemoTest(@Autowired DataSource dataSource) {
+        // テストデータ
+        SampleMemoEntity testEntity = new SampleMemoEntity();
+        testEntity.setId(98L);
+        testEntity.setSubject("キックボクシング");
+        testEntity.setMemo("楽しかった");
+        testEntity.setUserId(99);
+        testEntity.setUpdatedAt(LocalDateTime.now());
+        Changes change = new Changes(dataSource);
+
+        change.setStartPointNow();
+        // テスト対象メソッド実行
+        sampleMemoRepository.save(testEntity);
+        sampleMemoRepository.flush();
+        change.setEndPointNow();
+
+        assertThat(change)
+                .changeOfModificationOnTable("sample_memo")
+                .isModification()
+                .hasPksValues(98L)
+                .rowAtStartPoint()
+                    .value("subject").isEqualTo("Junit")
+                    .value("user_id").isEqualTo(2)
+                    .value("memo").isEqualTo("テストコードは奥が深い")
+                .rowAtEndPoint()
+                    .value("subject").isEqualTo("キックボクシング")
+                    .value("user_id").isEqualTo(99)
+                    .value("memo").isEqualTo("楽しかった");
     }
 }
