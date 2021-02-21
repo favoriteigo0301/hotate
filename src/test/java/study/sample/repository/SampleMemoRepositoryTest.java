@@ -2,6 +2,7 @@ package study.sample.repository;
 
 import static com.ninja_squad.dbsetup.Operations.*;
 import static org.assertj.db.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
@@ -10,6 +11,7 @@ import com.ninja_squad.dbsetup.operation.Operation;
 import org.assertj.db.type.Changes;
 import org.assertj.db.type.Table;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +19,7 @@ import study.sample.entity.SampleMemoEntity;
 
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @SpringBootTest
 class SampleMemoRepositoryTest {
@@ -138,5 +141,15 @@ class SampleMemoRepositoryTest {
                     .value("subject").isEqualTo("キックボクシング")
                     .value("user_id").isEqualTo(99)
                     .value("memo").isEqualTo("楽しかった");
+    }
+
+    @Order(1)
+    @Test
+    void selectByPrimaryKeyTest()  {
+        Optional<SampleMemoEntity> actualEntity = sampleMemoRepository.findById(99L);
+        assertEquals(actualEntity.get().getId(), 99L);
+        assertEquals(actualEntity.get().getSubject(), "java");
+        assertEquals(actualEntity.get().getUserId(), 1);
+        assertEquals(actualEntity.get().getMemo(), "積み上げる");
     }
 }
