@@ -1,8 +1,6 @@
 package study.sample.entity;
 
-
 import lombok.Data;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,9 +14,11 @@ public class SampleMemoEntity {
     @Column(name = "id")
     private long id;
 
-
     @Column(name = "user_id")
     private int userId;
+
+    @Column(name = "category_ids")
+    private String categoryIds;
 
     @Column(name = "subject")
     private String subject;

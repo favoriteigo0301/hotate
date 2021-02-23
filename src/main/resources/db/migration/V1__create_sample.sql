@@ -1,3 +1,4 @@
+-- ユーザテーブル
 create table users
 (
     id         bigint primary key not null auto_increment,
@@ -6,16 +7,19 @@ create table users
     updated_at timestamp
 );
 
+-- メモテーブル
 create table sample_memo
 (
     id        bigint primary key not null auto_increment,
     user_id   bigint not null,
+    category_ids text,
     subject   varchar(40)        not null,
     memo      text               not null,
     created_at timestamp,
     updated_at timestamp
 );
 
+-- カテゴリーテーブル
 create table sample_category
 (
     id bigint primary key not null  auto_increment,
