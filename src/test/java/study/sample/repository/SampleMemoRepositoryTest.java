@@ -17,7 +17,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import study.sample.config.SampleConfiguration;
 import study.sample.entity.SampleMemoEntity;
 
 import javax.sql.DataSource;
@@ -25,11 +27,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * メモリポジトリテストクラス
+ * Todo ページング機能の確認
+ */
 @SpringBootTest
 class SampleMemoRepositoryTest {
 
     @Autowired
     private SampleMemoRepository sampleMemoRepository;
+
+    @Autowired
+    private SampleConfiguration sampleConfiguration;
 
     private static Destination destination;
 
@@ -42,6 +51,10 @@ class SampleMemoRepositoryTest {
                         .columns("id", "user_id","category_ids", "subject", "memo", "created_at", "updated_at")
                         .values(99,1,"1","java","積み上げる", LocalDateTime.now(), LocalDateTime.now())
                         .values(98,2,"1,2,3","Junit","テストコードは奥が深い", LocalDateTime.now(), LocalDateTime.now())
+                        .values(9999,2,"1,2,3","SpringBoot","ページネーション機能作成中", LocalDateTime.now(), LocalDateTime.now())
+                        .values(8888,2,"1,2,3","Junit","パラメータ化テスト実施", LocalDateTime.now(), LocalDateTime.now())
+                        .values(7777,2,"1,2,3","pagenation","１ページ2件で実施", LocalDateTime.now(), LocalDateTime.now())
+                        .values(6666,2,"1,2,3","SpringBoot","頑張って学習する", LocalDateTime.now(), LocalDateTime.now())
                         .build());
 
         DbSetup dbSetup = new DbSetup(destination, operation);
@@ -187,7 +200,25 @@ class SampleMemoRepositoryTest {
     @Test
     void selectListTest() {
         List<SampleMemoEntity> actualEntityList = sampleMemoRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        assertEquals(actualEntityList.size(), 2);
-        assertEquals(actualEntityList.get(0).getId(), 99L);
+        assertEquals(actualEntityList.size(), 6);
+        assertEquals(actualEntityList.get(0).getId(), 9999L);
+    }
+
+    /**
+     * ページネーションを確認する
+     * TODO 現在ページは複数パターンあるのでパラメータ化テストを行う
+     */
+    @Order(3)
+    @Test
+    void selectPageNationTest() {
+        // ソート順はidの降順
+        Sort sort = Sort.by(Sort.Direction.DESC,"id");
+        SamplePageable samplePageable = new SamplePageable(1,sampleConfiguration.getMaxPageSize(), sort);
+
+        // テスト対象メソッド実行
+        Page<SampleMemoEntity> sampleMemoEntities = sampleMemoRepository.findAll(samplePageable);
+
+        assertEquals(sampleMemoEntities.getTotalPages(), 1);
+        assertEquals(sampleConfiguration.getMaxPageSize(), 12);
     }
 }
