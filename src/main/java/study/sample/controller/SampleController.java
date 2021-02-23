@@ -42,7 +42,6 @@ public class SampleController {
     @GetMapping("/test")
     public ModelAndView index(ModelAndView mav) {
         mav.setViewName("index");
-        System.out.println("コンフィグ" + sampleConfiguration.getUserNameSize());
         return mav;
     }
 
