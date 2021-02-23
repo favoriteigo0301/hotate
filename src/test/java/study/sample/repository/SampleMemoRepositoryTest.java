@@ -11,9 +11,9 @@ import com.ninja_squad.dbsetup.destination.Destination;
 import com.ninja_squad.dbsetup.operation.Operation;
 import org.assertj.db.type.Changes;
 import org.assertj.db.type.Table;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -32,6 +32,7 @@ import java.util.Optional;
  * Todo ページング機能の確認
  */
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class SampleMemoRepositoryTest {
 
     @Autowired
@@ -182,7 +183,7 @@ class SampleMemoRepositoryTest {
     /**
      * 主キー検索できることを確認する
      */
-    @Order(1)
+    @Order(3)
     @Test
     void selectByPrimaryKeyTest()  {
         Optional<SampleMemoEntity> actualEntity = sampleMemoRepository.findById(99L);
@@ -206,19 +207,32 @@ class SampleMemoRepositoryTest {
 
     /**
      * ページネーションを確認する
-     * TODO 現在ページは複数パターンあるのでパラメータ化テストを行う
      */
-    @Order(3)
-    @Test
-    void selectPageNationTest() {
+    @Order(1)
+    @ParameterizedTest
+    @ValueSource(ints = {0,1,2})
+    void selectPageNationTest(int page) {
         // ソート順はidの降順
         Sort sort = Sort.by(Sort.Direction.DESC,"id");
-        SamplePageable samplePageable = new SamplePageable(1,sampleConfiguration.getMaxPageSize(), sort);
+        SamplePageable samplePageable = new SamplePageable(page,sampleConfiguration.getMaxPageSize(), sort);
 
         // テスト対象メソッド実行
         Page<SampleMemoEntity> sampleMemoEntities = sampleMemoRepository.findAll(samplePageable);
+        System.out.println(page +"ページ毎のid"+sampleMemoEntities.getContent().get(0).getId());
 
-        assertEquals(sampleMemoEntities.getTotalPages(), 1);
-        assertEquals(sampleConfiguration.getMaxPageSize(), 12);
+        // ページ毎のデータを確認
+        if (page == 0) {
+            assertEquals(sampleMemoEntities.getContent().get(0).getMemo(), "ページネーション機能作成中");
+            assertEquals(sampleMemoEntities.getContent().get(1).getMemo(), "パラメータ化テスト実施");
+        } else if (page == 1) {
+            assertEquals(sampleMemoEntities.getContent().get(0).getMemo(), "１ページ2件で実施");
+            assertEquals(sampleMemoEntities.getContent().get(1).getMemo(), "頑張って学習する");
+        } else {
+            assertEquals(sampleMemoEntities.getContent().get(0).getMemo(), "積み上げる");
+            assertEquals(sampleMemoEntities.getContent().get(1).getMemo(), "テストコードは奥が深い");
+        }
+
+        assertEquals(sampleMemoEntities.getTotalPages(), 3);
+        assertEquals(sampleConfiguration.getMaxPageSize(), 2);
     }
 }
