@@ -4,11 +4,11 @@ new Vue({
         userName:'',
         title: '',
         category:'',
-        detail: '',
+        memo: '',
         userNameErrorMessage:'',
         titleErrorMessage: '',
         categoryErrorMessage:'',
-        detailErrorMessage:'',
+        memoErrorMessage:'',
         outputCategories:[],
         checkFlg: true
     },
@@ -21,8 +21,8 @@ new Vue({
                 this.titleErrorMessage = "タイトルを入力してください"
                 this.checkFlg = false
             }
-            if (!this.detail) {
-                this.detailErrorMessage= "詳細を入力してください"
+            if (!this.memo) {
+                this.memoErrorMessage= "詳細を入力してください"
                 this.checkFlg = false
             }
             if (!this.category) {

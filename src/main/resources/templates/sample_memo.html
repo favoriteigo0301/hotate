@@ -42,9 +42,9 @@
             <div class="form-row">
                 <div class="col-md-6 mt-3">
                     <label for="detail">内容</label>
-                    <textarea class="form-control is-invalid" name="detail" placeholder="えらい" v-model="detail"></textarea>
-                    <div class="invalid-feedback">{{ detailErrorMessage }}</div>
-                    <div class="invalid-feedback" th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}"></div>
+                    <textarea class="form-control is-invalid" name="memo" placeholder="えらい" v-model="memo"></textarea>
+                    <div class="invalid-feedback">{{ memoErrorMessage }}</div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('memo')}" th:errors="*{memo}"></div>
                 </div>
             </div>
 
