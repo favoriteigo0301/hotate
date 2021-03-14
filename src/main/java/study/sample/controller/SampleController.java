@@ -84,8 +84,7 @@ public class SampleController {
 
     @GetMapping("/memo/list")
     public ModelAndView showMemoList(ModelAndView mav) {
-        SampleMemoEntity[] sampleMemos = service.getList();
-
+        mav.addObject("sampleMemoList", service.getSampleMemos());
         mav.setViewName("sample_memo_list");
         return mav;
     }
