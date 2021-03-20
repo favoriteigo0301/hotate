@@ -1,15 +1,21 @@
 package study.sample.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import study.sample.bean.SampleMemoBean;
+import study.sample.bean.ScreenBean;
+import study.sample.config.SampleConfiguration;
 import study.sample.entity.SampleMemoEntity;
 import study.sample.repository.SampleMemoRepository;
 import study.sample.form.SampleMemoRequest;
+import study.sample.repository.SamplePageable;
 import study.sample.repository.UserRepository;
 
 import java.time.LocalDateTime;
@@ -28,6 +34,9 @@ public class SampleMemoService {
 
     @Autowired
     private SampleMemoRepository sampleMemoRepository;
+
+    @Autowired
+    private SampleConfiguration configuration;
 
     public SampleMemoService() {
     }
@@ -57,6 +66,10 @@ public class SampleMemoService {
         return response.getBody();
     }
 
+    /**
+     * 技術調査のためにAPI化してるけど必要かはよくわからない
+     * @return
+     */
     public SampleMemoEntity[] getList() {
         UriComponentsBuilder builder = UriComponentsBuilder
                 .fromUriString("http://localhost:8080/api/memo/list");
@@ -67,8 +80,21 @@ public class SampleMemoService {
         return response;
     }
 
-    public List<SampleMemoBean> getSampleMemos() {
-        List<SampleMemoEntity> sampleMemoEntities = sampleMemoRepository.findAll();
+    /**
+     *
+     * @return
+     */
+    public ScreenBean getSampleMemos(int page) {
+        ScreenBean screenBean = new ScreenBean();
+        Sort sort = Sort.by(Sort.Direction.DESC,"id");
+        SamplePageable pageable = new SamplePageable(page - 1,configuration.getMaxPageSize(), sort);
+        Page<SampleMemoEntity> sampleMemoEntities = sampleMemoRepository.findAll(pageable);
+
+        // ページング設定
+        screenBean.setTotalElement(sampleMemoEntities.getTotalElements());
+        screenBean.setTotalPage(sampleMemoEntities.getTotalPages());
+        screenBean.setCurrentPage(page);
+
         List<SampleMemoBean> beans =
                 sampleMemoEntities.stream()
                 .map(s -> {
@@ -77,17 +103,15 @@ public class SampleMemoService {
                     bean.setSubject(s.getSubject());
                     bean.setMemo(s.getMemo());
                     userRepository.findById(s.getUserId()).ifPresent(f-> bean.setUserName(f.getName()));
-                    userRepository.findById(s.getUserId()).ifPresent(f-> bean.setSampleMemoEntities(f.getEntityList()));
-
-                    System.out.println("userリポジトリ" + bean.getSampleMemoEntities().size());
                     return bean;
-
                 }).map(m -> {
                     if (!StringUtils.hasText(m.getUserName())) {
                         m.setUserName("ゲストさん");
                     }
                     return m;
                 }).collect(Collectors.toList());
-        return beans;
+        screenBean.setSampleMemoBeanList(beans);
+
+        return screenBean;
     }
 }

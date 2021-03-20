@@ -1,10 +1,6 @@
 package study.sample.bean;
 
 import lombok.Data;
-import study.sample.entity.SampleMemoEntity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 public class SampleMemoBean {
@@ -13,5 +9,4 @@ public class SampleMemoBean {
     private String categoryName;
     private String subject;
     private String memo;
-    private List<SampleMemoEntity> sampleMemoEntities = new ArrayList<>();
 }

@@ -84,8 +84,17 @@ public class SampleController {
 
     @GetMapping("/memo/list")
     public ModelAndView showMemoList(ModelAndView mav) {
-        mav.addObject("sampleMemoList", service.getSampleMemos());
+        mav.addObject("sampleMemoList", service.getSampleMemos(1));
         mav.setViewName("sample_memo_list");
         return mav;
     }
+
+    @GetMapping("/memo/list/{page}")
+    public ModelAndView showMemoPage(ModelAndView mav, @PathVariable int page) {
+        System.out.println("検索ID" + page);
+        mav.addObject("sampleMemoList", service.getSampleMemos(page));
+        mav.setViewName("sample_memo_list");
+        return mav;
+    }
+
 }
