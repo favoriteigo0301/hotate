@@ -5,6 +5,11 @@
     <nav th:replace="common::common_nav"></nav>
     <div id ="sample">
         <div class="row">
+            <div class="col-sm-4">
+                <span class="bg-success" th:text="${flashMessage}"></span>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-4 mt-3" th:each="sampleMemo:${sampleMemoList.getSampleMemoBeanList()}">
                 <div class="card">
                     <h4 class="card-header" th:text="${sampleMemo.getUserName()}"></h4>

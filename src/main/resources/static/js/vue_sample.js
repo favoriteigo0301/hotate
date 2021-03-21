@@ -1,12 +1,11 @@
 new Vue({
     el:"#sample",
     data: {
-        userName:'',
-        title: '',
+        subject: '',
         category:'',
         memo: '',
         userNameErrorMessage:'',
-        titleErrorMessage: '',
+        subjectErrorMessage: '',
         categoryErrorMessage:'',
         memoErrorMessage:'',
         outputCategories:[],
@@ -14,19 +13,12 @@ new Vue({
     },
     methods: {
         checkInput:function (event) {
-            if (!this.userName) {
-                this.userNameErrorMessage = 'ユーザ名を入力してください'
-            }
-            if (!this.title) {
-                this.titleErrorMessage = "タイトルを入力してください"
+            if (!this.subject) {
+                this.subjectErrorMessage = "タイトルを入力してください"
                 this.checkFlg = false
             }
             if (!this.memo) {
                 this.memoErrorMessage= "詳細を入力してください"
-                this.checkFlg = false
-            }
-            if (!this.category) {
-                this.categoryErrorMessage= "タグ名を入力してください"
                 this.checkFlg = false
             }
             if (!this.checkFlg) {

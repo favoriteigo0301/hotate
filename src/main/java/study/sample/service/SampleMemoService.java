@@ -41,13 +41,20 @@ public class SampleMemoService {
     public SampleMemoService() {
     }
 
-    public void regist(SampleMemoRequest request) {
+    /**
+     * サンプルメモ登録
+     * @param request
+     */
+    public void registration(SampleMemoRequest request) {
         SampleMemoEntity sampleMemoEntity = new SampleMemoEntity();
-        sampleMemoEntity.setCategoryIds(request.getCategories());
+        sampleMemoEntity.setSubject(request.getSubject());
+        sampleMemoEntity.setUserId(1);
+        sampleMemoEntity.setMemo(request.getMemo());
         sampleMemoEntity.setCreatedAt(LocalDateTime.now());
         sampleMemoEntity.setUpdatedAt(LocalDateTime.now());
 
-        sampleMemoRepository.saveAndFlush(sampleMemoEntity);
+        SampleMemoEntity registrationEntity = sampleMemoRepository.saveAndFlush(sampleMemoEntity);
+        System.out.println("登録後のID" + registrationEntity.getId());
     }
 
     /**

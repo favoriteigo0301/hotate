@@ -6,23 +6,13 @@
     <nav th:replace="common::common_nav"></nav>
     <div id="sample">
         <form th:action="@{/sample/memo/index}" th:method="post" th:object="${request}" enctype="multipart/form-data" @submit="checkInput">
-            <div class="form-row">
-                <div class="col-md-6 mt-3">
-                    <label for="subject">ユーザ名</label>
-                    <input type="text" class="form-control is-invalid" name="userName" placeholder="イッシー" v-model="userName">
-                    <div class="invalid-feedback">{{ userNameErrorMessage }}</div>
-                    <!--
-                    <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" ></div>
-                    -->
-                </div>
-            </div>
 
             <div class="form-row">
                 <div class="col-md-6 mt-3">
                     <label for="subject">タイトル</label>
-                    <input type="text" class="form-control is-invalid" name="title" placeholder="今日は朝起きれた" v-model="title">
-                    <div class="invalid-feedback">{{ titleErrorMessage }}</div>
-                    <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}" ></div>
+                    <input type="text" class="form-control is-invalid" name="subject" placeholder="今日は朝起きれた" v-model="subject">
+                    <div class="invalid-feedback">{{ subjectErrorMessage }}</div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" ></div>
                 </div>
             </div>
 
