@@ -10,7 +10,7 @@ import org.springframework.data.domain.Sort;
  */
 public class SamplePageable extends PageRequest {
 
-    protected SamplePageable(int page, int size, Sort sort) {
+    public SamplePageable(int page, int size, Sort sort) {
         super(page, size, sort);
     }
 }

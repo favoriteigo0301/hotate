@@ -10,12 +10,14 @@ import com.ninja_squad.dbsetup.operation.Operation;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import study.sample.entity.UserEntity;
 
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
-@SpringBootTest
+@DataJpaTest
 class UserRepositoryTest {
 
     @Autowired
@@ -49,6 +51,12 @@ class UserRepositoryTest {
         boolean actual = userRepository.existsById(99L);
 
         assertEquals(expected, actual);
+    }
 
+    @Test
+    void userPrimaryKeyTest() {
+        Optional<UserEntity> entity = userRepository.findById(99L);
+        assertEquals(99L,entity.get().getId());
+        assertEquals(2, entity.get().getEntityList().size());
     }
 }

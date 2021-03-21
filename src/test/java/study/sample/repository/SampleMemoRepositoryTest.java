@@ -48,13 +48,13 @@ class SampleMemoRepositoryTest {
         Operation operation = sequenceOf(
                 sql("delete from sample_memo"),
                 insertInto("sample_memo")
-                        .columns("id", "user_id","category_ids", "subject", "memo", "created_at", "updated_at")
-                        .values(99,1,"1","java","積み上げる", LocalDateTime.now(), LocalDateTime.now())
-                        .values(98,2,"1,2,3","Junit","テストコードは奥が深い", LocalDateTime.now(), LocalDateTime.now())
-                        .values(9999,2,"1,2,3","SpringBoot","ページネーション機能作成中", LocalDateTime.now(), LocalDateTime.now())
-                        .values(8888,2,"1,2,3","Junit","パラメータ化テスト実施", LocalDateTime.now(), LocalDateTime.now())
-                        .values(7777,2,"1,2,3","pagenation","１ページ2件で実施", LocalDateTime.now(), LocalDateTime.now())
-                        .values(6666,2,"1,2,3","SpringBoot","頑張って学習する", LocalDateTime.now(), LocalDateTime.now())
+                        .columns("id", "user_id","subject", "memo", "created_at", "updated_at")
+                        .values(99,1,"java","積み上げる", LocalDateTime.now(), LocalDateTime.now())
+                        .values(98,2,"Junit","テストコードは奥が深い", LocalDateTime.now(), LocalDateTime.now())
+                        .values(9999,2,"SpringBoot","ページネーション機能作成中", LocalDateTime.now(), LocalDateTime.now())
+                        .values(8888,2,"Junit","パラメータ化テスト実施", LocalDateTime.now(), LocalDateTime.now())
+                        .values(7777,2,"pagenation","１ページ2件で実施", LocalDateTime.now(), LocalDateTime.now())
+                        .values(6666,2,"SpringBoot","頑張って学習する", LocalDateTime.now(), LocalDateTime.now())
                         .build());
 
         DbSetup dbSetup = new DbSetup(destination, operation);
@@ -104,7 +104,6 @@ class SampleMemoRepositoryTest {
         assertThat(table)
                 .column("id").value().isEqualTo("98")
                 .column("user_id").value().isEqualTo("2")
-                .column("category_ids").value().isEqualTo("1,2,3")
                 .column("subject").value().isEqualTo("Junit")
                 .column("memo").value().isEqualTo("テストコードは奥が深い");
     }
@@ -119,7 +118,6 @@ class SampleMemoRepositoryTest {
         SampleMemoEntity testEntity = new SampleMemoEntity();
         testEntity.setSubject("commewイベント");
         testEntity.setMemo("輪読会は良いかも");
-        testEntity.setCategoryIds("1,2,3,4,5");
         testEntity.setUserId(99);
         testEntity.setCreatedAt(LocalDateTime.now());
         testEntity.setUpdatedAt(LocalDateTime.now());
@@ -137,7 +135,6 @@ class SampleMemoRepositoryTest {
                .isCreation()
                .rowAtEndPoint()
                .value("subject").isEqualTo("commewイベント")
-               .value("category_ids").isEqualTo("1,2,3,4,5")
                .value("memo").isEqualTo("輪読会は良いかも")
                .value("user_id").isEqualTo(99);
     }
@@ -150,7 +147,6 @@ class SampleMemoRepositoryTest {
         // テストデータ
         SampleMemoEntity testEntity = new SampleMemoEntity();
         testEntity.setId(98L);
-        testEntity.setCategoryIds("1");
         testEntity.setSubject("キックボクシング");
         testEntity.setMemo("楽しかった");
         testEntity.setUserId(99);
@@ -170,12 +166,10 @@ class SampleMemoRepositoryTest {
                 .rowAtStartPoint()
                     .value("subject").isEqualTo("Junit")
                     .value("user_id").isEqualTo(2)
-                    .value("category_ids").isEqualTo("1,2,3")
                     .value("memo").isEqualTo("テストコードは奥が深い")
                 .rowAtEndPoint()
                     .value("subject").isEqualTo("キックボクシング")
                     .value("user_id").isEqualTo(99)
-                    .value("category_ids").isEqualTo("1")
                     .value("memo").isEqualTo("楽しかった");
     }
 
@@ -189,7 +183,6 @@ class SampleMemoRepositoryTest {
         assertEquals(actualEntity.get().getId(), 99L);
         assertEquals(actualEntity.get().getSubject(), "java");
         assertEquals(actualEntity.get().getUserId(), 1);
-        assertEquals(actualEntity.get().getCategoryIds(), "1");
         assertEquals(actualEntity.get().getMemo(), "積み上げる");
     }
 

@@ -17,9 +17,6 @@ public class SampleMemoEntity {
     @Column(name = "user_id")
     private long userId;
 
-    @Column(name = "category_ids")
-    private String categoryIds;
-
     @Column(name = "subject")
     private String subject;
 

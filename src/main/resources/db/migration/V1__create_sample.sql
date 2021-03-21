@@ -12,7 +12,6 @@ create table sample_memo
 (
     id        bigint primary key not null auto_increment,
     user_id   bigint not null,
-    category_ids text,
     subject   varchar(40)        not null,
     memo      text               not null,
     created_at timestamp,
@@ -23,6 +22,7 @@ create table sample_memo
 create table sample_category
 (
     id bigint primary key not null  auto_increment,
+    memo_id bigint,
     name varchar(40) not null,
     register_count bigint,
     created_at timestamp,

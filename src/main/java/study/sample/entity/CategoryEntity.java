@@ -21,8 +21,8 @@ public class CategoryEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "register_count")
-    private int registerCount;
+    @Column(name = "memo_id")
+    private long memoId;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
