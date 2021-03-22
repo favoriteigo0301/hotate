@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common_head(title, scripts,links)">
+    <meta charset="UTF-8">
+    <link th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <script th:href="@{/webjars/jquery/3.5.1/dist/jquery.min.map}"></script>
+    <script th:href="@{/webjars/popper.js/1.16.0/popper.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    
+    <title>サンプルメモ | ログイン</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top" th:fragment="common_nav">
+    <div class="container">
+        <a class="navbar-brand" href="#">サンプルメモアプリ | ログイン</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+    <div id="login">
+        <form th:action="@{/sample/login}" th:method="post" th:object="${loginRequest}" @submit="login">
+            <div class="form-row">
+                <div class="col-md-6 mt-3">
+                    <label for="subject">ユーザ名</label>
+                    <input type="text" class="form-control is-invalid" name="userName" placeholder="イッシー" v-model="userName">
+                    <div class="invalid-feedback">{{ userNameErrorMessage }}</div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" ></div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6 mt-3">
+                    <label for="tagName">パスワード</label>
+                    <input type="password" class="form-control is-invalid" name="password" placeholder="" v-model="password">
+                    <div class="invalid-feedback">{{ passwordErrorMessage }}</div>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></div>
+                </div>
+            </div>
+
+            <input type="submit" name="login" v-on:click="login" class="btn btn-primary mt-3" value="ログイン">
+            <input type="submit" name="registration" v-on:click="registration" class="btn btn-primary mt-3" value="登録">
+            <input type="hidden" name="actionFlg" v-model="actionFlg">
+        </form>
+    </div>
+</body>
+<script th:src="@{/js/vue_login.js}"></script>
+
+</html>
