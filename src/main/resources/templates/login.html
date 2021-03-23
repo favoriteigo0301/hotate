@@ -20,7 +20,7 @@
     </div>
 </nav>
     <div id="login">
-        <form th:action="@{/sample/login}" th:method="post" th:object="${loginRequest}" @submit="login">
+        <form th:action="@{/sample/login/post}" th:method="post" th:object="${loginRequest}" @submit="login">
             <div class="form-row">
                 <div class="col-md-6 mt-3">
                     <label for="subject">ユーザ名</label>

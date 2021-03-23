@@ -3,6 +3,8 @@ create table users
 (
     id         bigint primary key not null auto_increment,
     name       varchar(40)        not null,
+    password   char (60)       not null,
+    role       varchar(40) not null,
     created_at timestamp,
     updated_at timestamp
 );
