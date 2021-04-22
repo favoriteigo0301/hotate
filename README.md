@@ -8,9 +8,9 @@ sample配下のパッケージはすべてサンプルコードとし、必ず�
 ・Spring Data Jpa → CRUD技術（SpecificationAPI、CriteriaAPI等）  
 
 # 開発環境 
-・フロントエンド：「vue.js」「thymeleaf」「BootStrap」
-・ビルドツール：「Gradle」
-・バックエンド：「Spring Boot」
+・フロントエンド：「vue.js」「thymeleaf」「BootStrap」  
+・ビルドツール：「Gradle」  
+・バックエンド：「Spring Boot」  
 ・マイグレーション：「flyway」  
 ・データベース：「mariaDB」  
 ・テスト：「Junit」「DBUnit」  
