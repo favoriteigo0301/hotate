@@ -16,7 +16,7 @@ sample配下のパッケージはすべてサンプルコードとし、必ず�
 ・テスト：「Junit」「DBUnit」  
 
 # 開発環境構築手順
-1.```git clone```で最新ソースを取得
+1.```git clone```で最新ソースを取得  
 2.build.gradleの```flyway{}```のデータベース設定をローカル用にする
 ```gradle:gradle.build
 // データベース設定を行う
