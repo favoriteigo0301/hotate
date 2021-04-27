@@ -40,8 +40,9 @@
             </div>
 
             <input type="submit" name="login" v-on:click="login" class="btn btn-primary mt-3" value="ログイン">
+        </form>
+        <form th:action="@{/sample/login/register}" th:method="post" th:object="${loginRequest}" @submit="registration">
             <input type="submit" name="registration" v-on:click="registration" class="btn btn-primary mt-3" value="登録">
-            <input type="hidden" name="actionFlg" v-model="actionFlg">
         </form>
     </div>
 </body>
