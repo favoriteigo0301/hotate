@@ -10,7 +10,7 @@ new Vue({
     methods: {
         login:function (event) {
             if (!this.userName) {
-                this.userNameErrorMessage = "タイトルを入力してください"
+                this.userNameErrorMessage = "ユーザ名を入力してください"
                 this.checkFlg = false
             }
             if (!this.password) {

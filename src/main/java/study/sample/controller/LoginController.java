@@ -25,9 +25,17 @@ public class LoginController {
         return "login";
     }
 
+    @GetMapping("/login/signup")
+    public String signup(@ModelAttribute("loginRequest")LoginRequest request) {
+        return "signup";
+    }
+
     @PostMapping("/login/register")
     public ModelAndView register(@ModelAttribute("loginRequest")LoginRequest request,
-                                 ModelAndView mav) {
+                                 ModelAndView mav, BindingResult result,RedirectAttributes attributes) {
+
+        loginService.register(request);
+
         mav.setViewName("login");
         return mav;
     }

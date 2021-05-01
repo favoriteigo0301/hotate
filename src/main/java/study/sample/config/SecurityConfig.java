@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .mvcMatchers("/sample/login/**").permitAll()
                 .anyRequest().authenticated();
+
         http.formLogin()
                 .loginProcessingUrl("/sample/login/post")
                 .loginPage("/sample/login")

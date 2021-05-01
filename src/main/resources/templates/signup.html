@@ -8,16 +8,15 @@
     <script th:href="@{/webjars/popper.js/1.16.0/popper.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
     
-    <title>サンプルメモ | ログイン</title>
+    <title>サンプルメモ | ユーザ登録</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top" th:fragment="common_nav">
     <div class="container">
-        <a class="navbar-brand" href="#">サンプルメモアプリ | ログイン</a>
+        <a class="navbar-brand" href="login.html">サンプルメモアプリ | ユーザ登録</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a href="/sample/login/signup">ユーザ登録</a>
     </div>
 </nav>
     <div id="login">
@@ -26,7 +25,7 @@
                 <span class="bg-success" th:text="${flashMessage}"></span>
             </div>
         </div>
-        <form th:action="@{/sample/login/post}" th:method="post" th:object="${loginRequest}" @submit="login">
+        <form th:action="@{/sample/login/register}" th:method="post" th:object="${loginRequest}" @submit="login">
             <div class="form-row">
                 <div class="col-md-6 mt-3">
                     <label for="subject">ユーザ名</label>
@@ -44,8 +43,7 @@
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></div>
                 </div>
             </div>
-
-            <input type="submit" name="login" v-on:click="login" class="btn btn-primary mt-3" value="ログイン">
+            <input type="submit" name="login" v-on:click="login" class="btn btn-primary mt-3" value="登録">
         </form>
     </div>
 </body>
