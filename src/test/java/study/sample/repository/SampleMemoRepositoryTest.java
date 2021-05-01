@@ -12,6 +12,7 @@ import com.ninja_squad.dbsetup.operation.Operation;
 import org.assertj.db.type.Changes;
 import org.assertj.db.type.Table;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.StringUtils;
 import study.sample.config.SampleConfiguration;
 import study.sample.entity.SampleMemoEntity;
+import study.sample.entity.UserEntity;
 
+import javax.persistence.criteria.*;
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,6 +41,9 @@ class SampleMemoRepositoryTest {
 
     @Autowired
     private SampleMemoRepository sampleMemoRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     private SampleConfiguration sampleConfiguration;
@@ -136,7 +144,9 @@ class SampleMemoRepositoryTest {
                .rowAtEndPoint()
                .value("subject").isEqualTo("commewイベント")
                .value("memo").isEqualTo("輪読会は良いかも")
-               .value("user_id").isEqualTo(99);
+               .value("user_id").isEqualTo(99)
+               .value("user_id").isNotNull();
+
     }
 
     /**
@@ -171,6 +181,20 @@ class SampleMemoRepositoryTest {
                     .value("subject").isEqualTo("キックボクシング")
                     .value("user_id").isEqualTo(99)
                     .value("memo").isEqualTo("楽しかった");
+    }
+
+    @Test
+    void test() {
+        Specification<UserEntity> spec = (root,criteriaQuery,criteriaBuilder)->{
+            Root<SampleMemoEntity> joinEntity = criteriaQuery.from(SampleMemoEntity.class);
+            criteriaQuery.distinct(true);
+            Predicate p1 = criteriaBuilder.equal(joinEntity.get("userId"), root.get("id"));
+            Predicate p2 = criteriaBuilder.equal(root.get("id"), 1L);
+            return criteriaBuilder.and(p1, p2);
+        };
+        userRepository.findAll(spec);
+        assertEquals(true, true);
+
     }
 
     /**

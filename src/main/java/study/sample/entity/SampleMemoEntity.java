@@ -29,7 +29,4 @@ public class SampleMemoEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", referencedColumnName = "id" ,insertable = false, updatable = false)
-    private UserEntity userEntity;
 }

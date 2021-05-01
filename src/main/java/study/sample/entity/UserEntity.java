@@ -1,7 +1,8 @@
 package study.sample.entity;
 
 import lombok.Data;
-import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,19 +16,32 @@ public class UserEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", updatable = false)
     private long id;
 
-    @NotNull
     @Column(name = "name")
     private String name;
 
-    @Column(name = "created_at")
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "userEntity")
-    private List<SampleMemoEntity> entityList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
+    private List<RoleEntity> roleEntity;
+
+    @PrePersist
+    public void onPersist() {
+        setCreatedAt(LocalDateTime.now());
+        setUpdatedAt(LocalDateTime.now());
+    }
+
+    @PreUpdate
+    public void onPreUpdate() {
+        setUpdatedAt(LocalDateTime.now());
+    }
 }

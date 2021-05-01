@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import study.sample.entity.UserEntity;
 
 import javax.sql.DataSource;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @SpringBootTest
+@Transactional
 class UserRepositoryTest {
 
     @Autowired
@@ -26,6 +28,10 @@ class UserRepositoryTest {
 
     private static Destination destination;
 
+    /**
+     * テスト実行前にテストデータを登録する
+     * @param dataSource
+     */
     @BeforeAll
     static void setUp(@Autowired DataSource dataSource) {
         LocalDateTime createdAt = LocalDateTime.now();
@@ -35,9 +41,9 @@ class UserRepositoryTest {
         Operation operation = sequenceOf(
                 sql("delete from users"),
             insertInto("users")
-                .columns("id", "name","password","role","created_at", "updated_at")
-                .values(99,"イッシー","sakura0301","USER", createdAt, updatedAt)
-                .values(100,"不吉な人", "sakura0301","USER", createdAt, updatedAt)
+                .columns("id", "name","password","created_at", "updated_at")
+                .values(99,"イッシー","sakura0301", createdAt, updatedAt)
+                .values(100,"不吉な人", "sakura0301",createdAt, updatedAt)
                 .build());
         DbSetup dbSetup = new DbSetup(destination, operation);
         dbSetup.launch();
@@ -58,6 +64,6 @@ class UserRepositoryTest {
     void userPrimaryKeyTest() {
         Optional<UserEntity> entity = userRepository.findById(99L);
         assertEquals(99L,entity.get().getId());
-        //assertEquals(2, entity.get().getEntityList().size());
+        System.out.println("ロール件数" + entity.get().getRoleEntity().size());
     }
 }
