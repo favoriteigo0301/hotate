@@ -76,9 +76,11 @@ dependencies {
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.7.7'
 
     // セキュリティ
-    implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.4.5'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
-
+    // パスワード自動生成ライブラリ
+    implementation group: 'org.passay', name: 'passay', version: '1.6.0'
 
     mainClassName = 'study.App'
 }
